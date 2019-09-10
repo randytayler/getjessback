@@ -16,12 +16,14 @@ function back() {
 }
 function fadeToPage(id){
 	clearInterval(fadeInterval);
-	fadeInterval = setInterval(fadeOut,10);
-	setTimeout(function(){loadPage(id)},500);
+	fadeInterval = setInterval(function(){fadeOut(id)},10);
 }
-function fadeOut(){
+function fadeOut(id){
 	d('content').style.opacity-=.02;
-	if(d('content').style.opacity <= 0) clearInterval(fadeInterval);
+	if(d('content').style.opacity <= 0) {
+		clearInterval(fadeInterval);
+		loadPage(id);
+	}
 }
 function loadPage(id) {
 	d('content').style.opacity = 1;
