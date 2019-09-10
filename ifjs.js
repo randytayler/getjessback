@@ -24,7 +24,6 @@ function fadeOut(){
 	if(d('content').style.opacity <= 0) clearInterval(fadeInterval);
 }
 function loadPage(id) {
-	dev = true;
 	d('content').style.opacity = 1;
 	gameHistory.push(id);
 	var bodytext = d("bodytext");
@@ -88,7 +87,7 @@ function loadPage(id) {
 				addChoice(choiceId, choiceText);
 			}
 		} else {
-			if (((choice.coil) && (document.monetization) && (document.monetization.state=='started')) || !choice.coil || dev) {
+			if (((choice.coil) && (document.monetization) && (document.monetization.state=='started')) || !choice.coil) {
 				addChoice(choiceId, choiceText);
 			}
 		}
