@@ -1,12 +1,5 @@
-var pages = game;
-var choices = '';
-var conditions = {};
-var gameHistory = [];
-var endings = [];
-var possibleEndings = 5;
-var fadeInterval;
-function d(i){return document.getElementById(i)}
-function init() {d('content').style.opacity=1;choices = d("choice_list");d("gametitle").innerHTML=document.title=gametitle;d("desc").innerHTML=gamedescription;}
+var pages=game,choices='',conditions={},gameHistory=[],endings=[],fadeInterval;
+function init() {document.querySelector('#content').style.opacity=1;choices = document.querySelector('#choice_list');document.querySelector('#gametitle').innerHTML=document.title=gametitle;document.querySelector('#desc').innerHTML=gamedescription;}
 function back() {
 	gameHistory.pop();
 	if (gameHistory.length > 0){
@@ -19,24 +12,24 @@ function fadeToPage(id){
 	fadeInterval = setInterval(function(){fadeOut(id)},10);
 }
 function fadeOut(id){
-	d('content').style.opacity-=.02;
-	if(d('content').style.opacity <= 0) {
+	document.querySelector('#content').style.opacity-=.02;
+	if(document.querySelector('#content').style.opacity <= 0) {
 		clearInterval(fadeInterval);
 		loadPage(id);
 	}
 }
 function loadPage(id) {
-	d('content').style.opacity = 1;
+	document.querySelector('#content').style.opacity = 1;
 	gameHistory.push(id);
-	var bodytext = d("bodytext");
+	var bodytext = document.querySelector('#bodytext');
 	choices.innerHTML = '';
 	var page = pages[id];
 	var pic = pics[page.picId];
-	if(!pic) {d('canvas').style.display='none'}
+	if(!pic) {document.querySelector('#canvas').style.display='none'}
 	else {
-		d('canvas').style.display='block';
-		d('canvas').width=page.width;
-		d('canvas').height=page.height;
+		document.querySelector('#canvas').style.display='block';
+		document.querySelector('#canvas').width=page.width;
+		document.querySelector('#canvas').height=page.height;
 		if (!page.overlay){
 			draw(pic,page.width,page.height,page.rev);
 		} else {
@@ -45,7 +38,7 @@ function loadPage(id) {
 	};
 	if (page.ending){
 		endings[page.ending-1]=true;
-		d('endings').innerHTML = calcendings();
+		document.querySelector('#endings').innerHTML = calcendings();
 	}
 	bodytext.innerHTML = '';
 	if (page.preConditions) {
@@ -74,10 +67,7 @@ function loadPage(id) {
 		}
 	}
 	for (var i in page.choices) {
-		console.log(page);
 		var choice = page.choices[i];
-		var choiceText = choice.text;
-		var choiceId = choice.link;
 		if (choice.conditions) {
 			var con = true;
 			for (var j in choice.conditions){
@@ -86,11 +76,11 @@ function loadPage(id) {
 				}
 			}
 			if (con) {
-				addChoice(choiceId, choiceText);
+				addChoice(choice.link, choice.text);
 			}
 		} else {
 			if (((choice.coil) && (document.monetization) && (document.monetization.state=='started')) || !choice.coil) {
-				addChoice(choiceId, choiceText);
+				addChoice(choice.link, choice.text);
 			}
 		}
 	}
