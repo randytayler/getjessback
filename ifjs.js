@@ -5,6 +5,8 @@ function back() {
 	if (gameHistory.length > 0){
 		var lastPage = gameHistory.pop();
 		fadeToPage(lastPage);
+	} else {
+		gameHistory=[0];
 	}
 }
 function fadeToPage(id){
